@@ -75,9 +75,9 @@
 }
 .feed-post--right { grid-template-columns: 1fr 56px; }
 .feed-post--right .feed-post__avatar { order: 2; }
-.feed-post--right .feed-post__bubble { order: 1; border-radius: 22px 22px 6px 22px; }
+.feed-post--right .feed-post__bubble { order: 1; }
 .feed-post--right .feed-post__meta { flex-direction: row-reverse; }
-.feed-post--right .feed-post__bubble::before { left: auto; right: -7px; transform: scaleX(-1); }
+.feed-post--right .feed-post__bubble::before { left: auto; right: -11px; transform: scaleX(-1); }
 
 .feed-post__avatar {
   width: 56px; height: 56px;
@@ -90,7 +90,7 @@
 
 .feed-post__bubble {
   background: var(--white);
-  border-radius: 22px 22px 22px 6px;
+  border-radius: 22px;
   padding: 1.4rem 1.6rem;
   box-shadow: var(--shadow-card);
   position: relative;
@@ -98,11 +98,11 @@
 .feed-post__bubble::before {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: -7px;
-  width: 18px; height: 18px;
+  top: 16px;
+  left: -11px;
+  width: 24px; height: 24px;
   background: var(--white);
-  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  clip-path: polygon(100% 0, 100% 100%, 0 50%);
 }
 .feed-post__meta {
   display: flex;
@@ -136,10 +136,11 @@
 @media (max-width: 640px) {
   .about-hero .container { grid-template-columns: 1fr; }
   .feed-post, .feed-post--right { grid-template-columns: 44px 1fr; }
+  .feed-post__bubble::before { top: 14px; width: 20px; height: 20px; left: -9px; }
   .feed-post--right .feed-post__avatar { order: 0; }
-  .feed-post--right .feed-post__bubble { order: 0; border-radius: 22px 22px 22px 6px; }
+  .feed-post--right .feed-post__bubble { order: 0; }
   .feed-post--right .feed-post__meta { flex-direction: row; }
-  .feed-post--right .feed-post__bubble::before { left: -7px; right: auto; transform: none; }
+  .feed-post--right .feed-post__bubble::before { left: -9px; right: auto; transform: none; }
   .feed-post__avatar { width: 44px; height: 44px; }
 }
 

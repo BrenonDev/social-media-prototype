@@ -36,4 +36,21 @@
       if (firstField) firstField.focus({ preventScroll: true });
     });
   }
+
+  /* ---------------- FAQ (accordion com animação) ---------------- */
+  document.querySelectorAll('.faq-summary').forEach((btn) => {
+    const panel = btn.nextElementSibling;
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      if (panel) panel.style.maxHeight = isOpen ? '0px' : `${panel.scrollHeight}px`;
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.faq-summary[aria-expanded="true"]').forEach((btn) => {
+      const panel = btn.nextElementSibling;
+      if (panel) panel.style.maxHeight = `${panel.scrollHeight}px`;
+    });
+  });
 })();

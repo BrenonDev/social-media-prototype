@@ -67,12 +67,10 @@
 .service-row[aria-expanded="true"] .service-row__title { color: var(--purple-600); }
 
 .service-row__panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur-base) var(--ease-out);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--dur-base) var(--ease-out);
 }
-.service-row__panel > div { overflow: hidden; }
-.service-row[aria-expanded="true"] + .service-row__panel { grid-template-rows: 1fr; }
 .service-row__panel p { max-width: 54ch; padding-bottom: 1rem; color: var(--body-text); }
 .service-row__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 1.6rem; }
 .service-row__tags li {
@@ -193,6 +191,7 @@
   transform: scale(1.04);
 }
 .plan-card--featured:hover { transform: scale(1.04) translateY(-8px); }
+.plan-card--featured h3 { color: var(--white); }
 .plan-card--featured .plan-card__desc,
 .plan-card--featured .plan-card__list li { color: var(--purple-200); }
 .plan-card--featured .plan-card__list li svg { color: var(--mint-500); }
@@ -263,14 +262,18 @@
 }
 .testimonial-controls button:hover { transform: scale(1.08); }
 .testimonial-controls button svg { width: 18px; height: 18px; color: var(--ink); }
-.testimonial-dots { display: flex; gap: 0.5rem; }
+.testimonial-dots { display: flex; align-items: center; gap: 0.5rem; }
 .testimonial-dots button {
   width: 9px; height: 9px;
+  padding: 0;
   border-radius: 50%;
   background: var(--purple-300);
   box-shadow: none;
+  display: block;
+  flex-shrink: 0;
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.testimonial-dots button.is-active { background: var(--coral-500); }
+.testimonial-dots button.is-active { background: var(--coral-500); transform: scale(1.15); }
 
 @media (max-width: 900px) {
   .plans-grid { grid-template-columns: 1fr; }

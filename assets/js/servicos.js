@@ -11,8 +11,17 @@
     row.addEventListener('click', () => {
       const isOpen = row.getAttribute('aria-expanded') === 'true';
 
-      rows.forEach((r) => r.setAttribute('aria-expanded', 'false'));
-      row.setAttribute('aria-expanded', String(!isOpen));
+      rows.forEach((r) => {
+        r.setAttribute('aria-expanded', 'false');
+        const p = r.nextElementSibling;
+        if (p) p.style.maxHeight = '0px';
+      });
+
+      if (!isOpen) {
+        row.setAttribute('aria-expanded', 'true');
+        const panel = row.nextElementSibling;
+        if (panel) panel.style.maxHeight = `${panel.scrollHeight}px`;
+      }
 
       if (!isOpen && visualImg) {
         const nextSrc = row.dataset.img;
@@ -28,16 +37,22 @@
     });
   });
 
-  /* ---------------- Carrossel de depoimentos ---------------- */
+  window.addEventListener('resize', () => {
+    const openRow = document.querySelector('.service-row[aria-expanded="true"]');
+    if (openRow) {
+      const panel = openRow.nextElementSibling;
+      if (panel) panel.style.maxHeight = `${panel.scrollHeight}px`;
+    }
+  });
+
+  /* ---------------- Carrossel de depoimentos (sem autoplay, só interação) ---------------- */
   const track = document.querySelector('.testimonial-track');
   if (track) {
     const slides = Array.from(track.querySelectorAll('.testimonial-slide'));
     const prevBtn = document.querySelector('[data-testimonial="prev"]');
     const nextBtn = document.querySelector('[data-testimonial="next"]');
     const dotsWrap = document.querySelector('.testimonial-dots');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let index = 0;
-    let timer = null;
 
     const dots = slides.map((_, i) => {
       const b = document.createElement('button');
@@ -56,23 +71,9 @@
       dots[index].classList.add('is-active');
     }
 
-    function startAuto() {
-      if (prefersReducedMotion) return;
-      stopAuto();
-      timer = setInterval(() => goTo(index + 1), 6000);
-    }
-    function stopAuto() {
-      if (timer) clearInterval(timer);
-    }
-
-    prevBtn.addEventListener('click', () => { goTo(index - 1); startAuto(); });
-    nextBtn.addEventListener('click', () => { goTo(index + 1); startAuto(); });
-    track.addEventListener('mouseenter', stopAuto);
-    track.addEventListener('mouseleave', startAuto);
-    track.addEventListener('focusin', stopAuto);
-    track.addEventListener('focusout', startAuto);
+    prevBtn.addEventListener('click', () => goTo(index - 1));
+    nextBtn.addEventListener('click', () => goTo(index + 1));
 
     goTo(0);
-    startAuto();
   }
 })();
