@@ -146,19 +146,27 @@
 
 /* ---- Trajetória ---- */
 .timeline {
+  --timeline-gap: 2.2rem;
+  --timeline-line-width: 2px;
   position: relative;
   max-width: 760px;
   margin-inline: auto;
-  padding-left: 2.2rem;
-  border-left: 2px dashed var(--purple-300);
+  padding-left: var(--timeline-gap);
+  border-left: var(--timeline-line-width) dashed var(--purple-300);
 }
 .timeline__item { position: relative; padding-bottom: var(--space-lg); }
 .timeline__item:last-child { padding-bottom: 0; }
 .timeline__dot {
   position: absolute;
-  left: -2.55rem;
+  /* Ancora no centro da linha (metade da borda), não num número fixo:
+     assim o ponto nunca desalinha se o gap ou a espessura da linha mudarem. */
+  left: calc(-1 * var(--timeline-gap) - var(--timeline-line-width) / 2);
   top: 0.2rem;
   width: 16px; height: 16px;
+  /* translateX centraliza pela própria largura do elemento, em vez de
+     subtrair metade do tamanho "no olho" — evita o desvio de sub-pixel
+     que aparecia em zooms fracionados. */
+  transform: translateX(-50%);
   border-radius: 50%;
   background: var(--coral-500);
   border: 4px solid var(--lilac-bg);
